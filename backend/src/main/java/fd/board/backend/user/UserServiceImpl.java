@@ -27,4 +27,11 @@ public class UserServiceImpl implements UserService {
     public Boolean exist(Long userId) {
         return userRepository.existsById(userId);
     }
+
+    @Override
+    public void duplicateCheckNickname(String nickname) {
+        if (userRepository.existsByNickname(nickname)) {
+            throw new IllegalArgumentException("중복된 닉네임이 존재합니다.");
+        }
+    }
 }

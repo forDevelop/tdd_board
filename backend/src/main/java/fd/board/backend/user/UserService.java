@@ -7,4 +7,6 @@ public interface UserService {
     public User signUp(User user);
 
     Boolean exist(Long userId);
+
+    void duplicateCheckNickname(String nickname);
 }

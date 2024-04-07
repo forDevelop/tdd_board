@@ -15,6 +15,12 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDTO request) {
 
+        try {
+            userService.duplicateCheckNickname(request.nickname());
+        }catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(e.getMessage());
+        }
+
         User user = new User(request.nickname(), request.email(), request.profileImageUrl());
         User savedUser = userService.signUp(user);
 
