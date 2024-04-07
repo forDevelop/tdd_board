@@ -21,8 +21,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> findUser(@PathVariable Long userId) {
+    @GetMapping("/exist/{userId}")
+    public ResponseEntity<?> existUser(@PathVariable Long userId) {
 
 
         Boolean isExist = userService.exist(userId);
