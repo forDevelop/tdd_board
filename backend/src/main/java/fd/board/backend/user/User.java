@@ -18,6 +18,9 @@ public class User extends BaseEntity {
     private Long id;
 
     private Role role;
+    private String nickname;
+    private String email;
+    private String profileImageUrl;
 
     public User(Role role) {
         super();
@@ -25,6 +28,15 @@ public class User extends BaseEntity {
         Assert.notNull(role, "유저 권한은 필수입니다.");
     }
 
-    //==  로그인 구현시 User 정보 추가 필요!!  ==//
+    public User(String nickname, String email, String profileImageUrl) {
+        this.role = Role.USER;
+        this.nickname = nickname;
+        this.email = email;
+        this.profileImageUrl = profileImageUrl;
+        Assert.notNull(role, "유저 권한은 필수입니다.");
+        Assert.hasText(nickname, "닉네임은 필수입니다.");
+        Assert.hasText(email, "이메일은 필수입니다.");
+//        Assert.hasText(profileImageUrl, "프로필 이미지 URL은 필수입니다.");
+    }
 
 }
