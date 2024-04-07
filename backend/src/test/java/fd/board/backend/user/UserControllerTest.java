@@ -24,4 +24,16 @@ public class UserControllerTest extends ApiTest {
 
     }
 
+    @Test
+    public void 사용자조회() throws Exception {
+        //given
+        Long request = UserSteps.사용자조회요청_생성();
+
+        //when
+        ExtractableResponse<Response> response = UserSteps.사용자조회요청(request);
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
 }
