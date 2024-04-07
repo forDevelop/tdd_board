@@ -23,4 +23,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public Boolean exist(Long userId) {
+        return userRepository.existsById(userId);
+    }
 }

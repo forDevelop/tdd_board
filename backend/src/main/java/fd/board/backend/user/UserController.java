@@ -4,10 +4,7 @@ package fd.board.backend.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -22,5 +19,18 @@ public class UserController {
         User savedUser = userService.signUp(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> findUser(@PathVariable Long userId) {
+
+
+        Boolean isExist = userService.exist(userId);
+
+        if (!isExist) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).build();
+
     }
 }

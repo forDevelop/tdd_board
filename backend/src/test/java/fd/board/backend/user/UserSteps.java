@@ -30,4 +30,17 @@ public class UserSteps {
                 .post("/api/v1/users/signup")
                 .then().log().all().extract();
     }
+
+    static Long 사용자조회요청_생성() {
+        회원가입요청(회원가입요청_생성());
+        return 1L;
+    }
+
+    static ExtractableResponse<Response> 사용자조회요청(Long userId) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .get("/api/v1/users/{userId}", userId)
+                .then().log().all().extract();
+    }
 }
