@@ -1,5 +1,6 @@
 package fd.board.backend.post.basic;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fd.board.backend.global.BaseEntity;
 import fd.board.backend.user.User;
 import jakarta.persistence.*;
@@ -27,10 +28,9 @@ public class Post extends BaseEntity {
 
 
     //== User 연관관계 생성 필요 ==//
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
 
