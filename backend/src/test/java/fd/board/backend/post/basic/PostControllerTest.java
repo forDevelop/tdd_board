@@ -8,6 +8,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,7 +18,6 @@ public class PostControllerTest extends ApiTest {
 
     @Autowired
     private UserService userService;
-
 
     @Test
     public void 게시글_작성() throws Exception {
@@ -48,7 +48,18 @@ public class PostControllerTest extends ApiTest {
 
         //then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
 
+    @Test
+    public void 게시글_목록조회_예외처리() throws Exception {
+        //given
+        Pageable request = PostSteps.게시글_목록조회_예외처리_요청생성();
+
+        //when
+        ExtractableResponse<Response> response = PostSteps.게시글목록조회요청(request);
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
     }
 
 

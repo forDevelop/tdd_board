@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 public interface PostService {
     public Post save(Post post);
 
-    Page<Post> findList(Pageable pageable);
+    public Page<PostCover> findList(Pageable request);
 }

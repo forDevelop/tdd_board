@@ -30,7 +30,6 @@ public class PostSteps {
     static Pageable 게시글목록조회요청_생성() {
         return PageRequest.of(0, 10);
     }
-
     static ExtractableResponse<Response> 게시글목록조회요청(Pageable request) {
         ExtractableResponse<Response> response = RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -40,5 +39,12 @@ public class PostSteps {
                 .then().log().all().extract();
 
         return response;
+    }
+
+    static Pageable 게시글_목록조회_예외처리_요청생성() {
+        int page = 1;
+        int size = 10;
+        Pageable request = PageRequest.of(page, size);
+        return request;
     }
 }
