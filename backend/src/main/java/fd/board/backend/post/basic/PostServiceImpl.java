@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
-
     @Override
     @Transactional
     public Post save(Post post) {
@@ -20,8 +19,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> findList(Pageable pageable) {
-        return postRepository.findAll(pageable);
+    public Page<PostCover> findList(Pageable pageable) {
+        Page<PostCover> postCoverPage = postRepository.findPostCoverPage(pageable);
+
+        if (postCoverPage.isEmpty()) {
+            throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
+        }
+
+        return postCoverPage;
     }
+
 
 }

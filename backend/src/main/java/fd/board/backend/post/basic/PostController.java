@@ -34,13 +34,13 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> findPostList(Pageable pageable) {
 
-        Page<Post> postList = postService.findList(pageable);
-
-
-        if (postList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        Page<PostCover> response;
+        try {
+            response = postService.findList(pageable);
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
         }
 
-        return ResponseEntity.ok(postList);
+        return ResponseEntity.ok(response);
     }
 }
