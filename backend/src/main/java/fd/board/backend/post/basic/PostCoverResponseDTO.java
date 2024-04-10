@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class PostCover {
+public class PostCoverResponseDTO {
     private Long postId;
     private String title;
     private String nickname;
@@ -13,7 +13,7 @@ public class PostCover {
     private Integer like;
     private Integer view;
 
-    public PostCover(Long postId, String title, String nickname, LocalDateTime time, Integer like, Integer view){
+    public PostCoverResponseDTO(Long postId, String title, String nickname, LocalDateTime time, Integer like, Integer view){
         this.postId = postId;
         this.title = title;
         this.nickname = nickname;

@@ -1,17 +1,12 @@
 package fd.board.backend.user;
 
 
-import fd.board.backend.post.basic.Role;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
 
 public class UserSteps {
-    public static User 사용자등록_생성() {
-        Role role = Role.USER;
-        return new User(role);
-    }
 
 
     public static SignUpRequestDTO 회원가입요청_생성() {

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query("select new fd.board.backend.post.basic.PostCover(p.id, p.title, p.user.nickname, p.createdAt, p.likeCount, p.viewCount) from Post p")
-    Page<PostCover> findPostCoverPage(Pageable pageable);
+    @Query("select new fd.board.backend.post.basic.PostCoverResponseDTO(p.id, p.title, p.user.nickname, p.createdAt, p.likeCount, p.viewCount) from Post p")
+    Page<PostCoverResponseDTO> findPostCoverPage(Pageable pageable);
 }

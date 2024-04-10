@@ -19,14 +19,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostCover> findList(Pageable pageable) {
-        Page<PostCover> postCoverPage = postRepository.findPostCoverPage(pageable);
+    public Page<PostCoverResponseDTO> findList(Pageable pageable) {
+        Page<PostCoverResponseDTO> postCoverPage = postRepository.findPostCoverPage(pageable);
 
         if (postCoverPage.isEmpty()) {
             throw new IllegalArgumentException("게시글이 존재하지 않습니다.");
         }
 
         return postCoverPage;
+    }
+
+    @Override
+    public PostDetailResponseDTO findDetail(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() ->
+                new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        post.addViewCount();
+
+        PostDetailResponseDTO postDetailResponseDTO = new PostDetailResponseDTO(post.getId(), post.getTitle(), post.getUser().getNickname(),
+                post.getLikeCount(), post.getViewCount(), post.getCreatedAt(),
+                post.getContent(), post.getComments());
+
+        return postDetailResponseDTO;
     }
 
 

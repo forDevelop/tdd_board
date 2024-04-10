@@ -1,6 +1,5 @@
 package fd.board.backend.post.basic;
 
-import fd.board.backend.user.User;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -46,5 +45,13 @@ public class PostSteps {
         int size = 10;
         Pageable request = PageRequest.of(page, size);
         return request;
+    }
+
+    static ExtractableResponse<Response> 게시글세부조회요청(Long request) {
+        return RestAssured.given().log().all()
+                .when()
+                .get("/api/v1/posts/{postId}", request)
+                .then().log().all()
+                .extract();
     }
 }
