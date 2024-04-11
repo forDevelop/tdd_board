@@ -3,6 +3,7 @@ package fd.board.backend.post.basic;
 import fd.board.backend.user.User;
 import fd.board.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -34,13 +35,25 @@ public class PostController {
     @GetMapping
     public ResponseEntity<?> findPostList(Pageable pageable) {
 
-        Page<PostCover> response;
+        Page<PostCoverResponseDTO> response;
         try {
             response = postService.findList(pageable);
         }catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
         }
 
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<?> findPostDetail(@PathVariable Long postId) {
+
+        PostDetailResponseDTO response;
+        try {
+            response = postService.findDetail(postId);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(e.getMessage());
+        }
         return ResponseEntity.ok(response);
     }
 }

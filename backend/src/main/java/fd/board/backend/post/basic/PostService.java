@@ -4,7 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PostService {
-    public Post save(Post post);
+    Post save(Post post);
 
-    public Page<PostCover> findList(Pageable request);
+    Page<PostCoverResponseDTO> findList(Pageable request);
+
+    PostDetailResponseDTO findDetail(Long postId);
 }

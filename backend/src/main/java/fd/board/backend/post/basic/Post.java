@@ -7,13 +7,18 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
 @Table(name = "posts")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 public class Post extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -33,6 +38,9 @@ public class Post extends BaseEntity {
     @JsonIgnore
     private User user;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
 
     public Post(User user, String title, String content, String imageUrl) {
         this.user = user;
@@ -46,5 +54,11 @@ public class Post extends BaseEntity {
         this.likeCount = 0;
         this.viewCount = 0;
         this.isNotice = user.getRole() == Role.ADMIN;
+        this.comments = new ArrayList<>();
+    }
+
+
+    public int addViewCount() {
+        return this.viewCount++;
     }
 }
