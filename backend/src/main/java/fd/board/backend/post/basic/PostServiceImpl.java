@@ -6,6 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -41,6 +44,28 @@ public class PostServiceImpl implements PostService {
                 post.getContent(), post.getComments());
 
         return postDetailResponseDTO;
+    }
+
+    @Override
+    public void modify(Long postId, ModifyPostRequestDTO request) throws AccessDeniedException {
+
+        Post post = postRepository.findById(postId).orElseThrow(() ->
+                new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        if(!Objects.equals(post.getUser().getId(), request.userId())){
+            throw new AccessDeniedException("게시글 작성자만 수정할 수 있습니다.");
+        }
+        post.modify(request.title(), request.content(), request.image());
+    }
+
+    @Override
+    public void delete(Long postId, Long userId) throws AccessDeniedException {
+
+        Post post = postRepository.findById(postId).orElseThrow(() ->
+                new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        if(!Objects.equals(post.getUser().getId(), userId)){
+            throw new AccessDeniedException("게시글 작성자만 삭제할 수 있습니다.");
+        }
+        postRepository.deleteById(postId);
     }
 
 
