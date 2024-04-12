@@ -10,9 +10,9 @@ import org.springframework.http.MediaType;
 public class PostSteps {
     static WritePostRequestDTO 게시글작성요청_생성(Long userId) {
 
-        String title = "제목";
-        String content = "내용";
-        String imageUrl = "이미지 URL";
+        String title = "title";
+        String content = "content";
+        String imageUrl = "imageUrl";
         return new WritePostRequestDTO(userId, title, content, imageUrl);
     }
 
@@ -53,5 +53,27 @@ public class PostSteps {
                 .get("/api/v1/posts/{postId}", request)
                 .then().log().all()
                 .extract();
+    }
+
+    static ExtractableResponse<Response> 게시글수정요청(ModifyPostRequestDTO request, Long postId) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .body(request)
+                .patch("/api/v1/posts/{postId}", postId)
+                .then().log().all().extract();
+    }
+
+    static ModifyPostRequestDTO 게시글수정요청_생성(Long userId) {
+        return new ModifyPostRequestDTO(userId, "title22", "content22", "image22");
+    }
+
+    static ExtractableResponse<Response> 게시글삭제요청(Long userId, Long postId) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                .param("userId", userId)
+                .delete("/api/v1/posts/{postId}", postId)
+                .then().log().all().extract();
     }
 }
